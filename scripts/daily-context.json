@@ -1,0 +1,39 @@
+{
+  "day": 0,
+  "date": "2026-05-29",
+  "version": "0.0.0-Genesis",
+  "theme": {
+    "name": "Cyberpunk Glassmorphism",
+    "style": "cyberpunk",
+    "mood": "neon, dark, futuristic"
+  },
+  "palette": {
+    "background": "#020408",
+    "surface": "#050b14",
+    "primary": "#00f5ff",
+    "accent": "#ff006e",
+    "text": "#e0f7ff",
+    "muted": "#3a6b7a"
+  },
+  "typography": {
+    "heading": "Orbitron",
+    "body": "Rajdhani",
+    "size": "large"
+  },
+  "layout": {
+    "structure": "centered",
+    "density": "spacious",
+    "border_style": "neon glow"
+  },
+  "animation": {
+    "level": "high",
+    "style": "particles, glitch, scanlines"
+  },
+  "components": {
+    "hero_text": "GET STARTED",
+    "subtitle": "Edit src/App.tsx and save to test HMR",
+    "button_label": "COUNT_",
+    "badge_text": "SYSTEM ONLINE — VITE + REACT"
+  },
+  "commit_message": "feat: UI Day 0 — Cyberpunk Glassmorphism (Genesis)"
+}
