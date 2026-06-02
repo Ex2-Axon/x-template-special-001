@@ -84,12 +84,37 @@ jobs:
           git push
 
       - name: Send to Discord
+        if: success()
         run: |
+          WEBHOOK_URL="${{ secrets.DISCORD_WEBHOOK_URL }}"
+          
+          if [ -z "$WEBHOOK_URL" ] || [ "$WEBHOOK_URL" == "" ]; then
+            echo "⚠️  WARNING: DISCORD_WEBHOOK_URL is not configured"
+            echo "Please set the secret in: Repository Settings → Secrets and variables → Actions"
+            echo "Add: DISCORD_WEBHOOK_URL = your_webhook_url"
+            exit 0
+          fi
+          
           SITE_URL="https://ex2-axon.github.io/x-template/"
-          COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.sha }}"
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          curl -s -o /dev/null \
+          
+          echo "📤 Sending notification to Discord..."
+          echo "App: ${{ steps.pkg.outputs.app_name }} v${{ steps.pkg.outputs.version }}"
+          echo "Commit: ${{ steps.commit.outputs.hash }} - ${{ steps.commit.outputs.message }}"
+          echo ""
+          
+          # Send to Discord
+          HTTP_STATUS=$(curl -w "%{http_code}" -s -o /tmp/discord_response.txt \
             -F "payload_json={\"username\":\"Axon Deploy Bot\",\"embeds\":[{\"title\":\"${{ steps.pkg.outputs.app_name }} v${{ steps.pkg.outputs.version }} deployed\",\"url\":\"${SITE_URL}\",\"color\":65535,\"fields\":[{\"name\":\"Commit\",\"value\":\"${{ steps.commit.outputs.hash }} ${{ steps.commit.outputs.message }}\"}],\"image\":{\"url\":\"attachment://screenshot.png\"},\"timestamp\":\"${TIMESTAMP}\"}]}" \
             -F "files[0]=@screenshot.png;type=image/png" \
-            "${{ secrets.DISCORD_WEBHOOK_URL }}"
-          echo "Sent to Discord"
+            "$WEBHOOK_URL")
+          
+          echo "HTTP Status: $HTTP_STATUS"
+          
+          if [ "$HTTP_STATUS" = "204" ]; then
+            echo "✅ Successfully sent to Discord!"
+          else
+            echo "❌ Discord notification failed (Status: $HTTP_STATUS)"
+            cat /tmp/discord_response.txt
+            exit 1
+          fi
