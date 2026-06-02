@@ -42,7 +42,7 @@ jobs:
           const browser = await chromium.launch();
           const page = await browser.newPage();
           await page.setViewportSize({ width: 1280, height: 720 });
-          await page.goto('https://ex2-axon.github.io/x-template/', {
+          await page.goto('https://ex2-axon.github.io/x-template-special-001/', {
             waitUntil: 'networkidle',
             timeout: 30000
           });
@@ -95,7 +95,7 @@ jobs:
             exit 0
           fi
           
-          SITE_URL="https://ex2-axon.github.io/x-template/"
+          SITE_URL="https://ex2-axon.github.io/x-template-special-001/"
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           
           echo "📤 Sending notification to Discord..."
