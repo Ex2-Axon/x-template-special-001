@@ -7,7 +7,7 @@
 
 **Live demo:** https://ex2-axon.github.io/x-template/
 
-![Screenshot](screenshot.png)
+![Screenshot](.github/screenshots/latest.png)
 
 ---
 
