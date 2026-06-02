@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Dna, 
   Droplet, 
@@ -6,7 +6,6 @@ import {
   Thermometer, 
   ShieldAlert, 
   Zap, 
-  Sliders, 
   Database, 
   RefreshCw, 
   Layers, 
@@ -16,11 +15,7 @@ import {
   FlaskConical, 
   Biohazard, 
   AlertTriangle,
-  CheckCircle2,
-  Eye,
-  HeartPulse,
-  Flame,
-  Wind
+  HeartPulse
 } from 'lucide-react';
 
 // --- โครงสร้างข้อมูลถังเพาะเลี้ยงชีวภาพ (Vessel Models) ---
@@ -65,13 +60,12 @@ export default function App() {
 
   // สเตทสำหรับเครื่องจัดเรียงรหัสพันธุกรรม (Gene Splicer)
   const [codons, setCodons] = useState<string[]>(['ATG', 'GCT', 'TAC', 'CGT', 'AAA', 'TGA']);
-  const [selectedCodonIndex, setSelectedCodonIndex] = useState<number | null>(null);
 
   // ระบบการอัปเดตแบบเรียลไทม์ (Simulated Biological Activity)
   useEffect(() => {
     const interval = setInterval(() => {
       // 1. อัปเดตชีพจรชีวภาพ (Pulse Waveform Generator)
-      setPulseRate(prev => {
+      setPulseRate(() => {
         const target = selectedVessel.status === 'วิกฤต' ? 120 : selectedVessel.status === 'กำลังกลายพันธุ์' ? 95 : 70;
         const nextPulse = Math.floor(target + (Math.random() - 0.5) * 15);
         setPulseBeats(prevBeats => {
